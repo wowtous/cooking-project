@@ -1,19 +1,19 @@
 package org.darebeat.constant;
 
 import java.util.Properties;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
 
 public class PropertiesLoader {
-	private static String filepath = "/jdbc.properties";
-    private static Properties pro;
+	private static Properties pro;
 
 	static{
         try {
             pro = new Properties();
-            InputStream in = ClassLoader.class.getResourceAsStream(filepath);
-            pro.load(in);
-            in.close();
+            FileInputStream fis = new FileInputStream(new File("jdbc.properties"));
+            pro.load(fis);
+            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

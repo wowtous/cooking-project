@@ -27,7 +27,8 @@
             <!-- 控制资源文件的拷贝 -->
             <resource>
                 <directory>src/main/resources</directory>
-                <targetPath>${project.build.directory}/classes</targetPath>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}</targetPath>
                 <!-- excludes和includes二选一使用即可 -->
                 <!-- 不包含的文件，支持通配符 -->
                 <excludes>
