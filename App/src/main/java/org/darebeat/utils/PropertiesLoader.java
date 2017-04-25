@@ -1,4 +1,4 @@
-package org.darebeat.constant;
+package org.darebeat.utils;
 
 import java.util.Properties;
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class PropertiesLoader {
 	static{
         try {
             pro = new Properties();
-            FileInputStream fis = new FileInputStream(new File("jdbc.properties"));
+            FileInputStream fis = new FileInputStream(new File("config.properties"));
             pro.load(fis);
             fis.close();
         } catch (IOException e) {

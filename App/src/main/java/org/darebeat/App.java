@@ -1,10 +1,14 @@
 package org.darebeat;
 
-import java.sql.*;
-import org.darebeat.constant.PropertiesLoader;
+import org.darebeat.utils.PropertiesLoader;
 import org.darebeat.bean.City;
+import org.darebeat.bean.SimpleMailSender;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 public class App {
     static final String JDBC_DRIVER = PropertiesLoader.getValue("JDBC_DRIVER");
@@ -17,7 +21,8 @@ public class App {
         // p.test();
         // p.test1(); // just for test database connection
         // p.test2(); // test class wraper
-        p.test3(); // get the city length and print the top 10
+        // p.test3(); // get the city length and print the top 10
+        p.test4();
     }
 
     public void test(){
@@ -40,7 +45,7 @@ public class App {
             conn = DriverManager.getConnection(JDBC_URL,USERNAME,PASSWORD);
 
             // 执行查询
-            System.out.println(" 实例化Statement对...");
+            System.out.println("实例化Statement对...");
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT cityId,cityName from dimcity";
@@ -95,7 +100,7 @@ public class App {
             conn = DriverManager.getConnection(JDBC_URL,USERNAME,PASSWORD);
 
             // 执行查询
-            System.out.println(" 实例化Statement对...");
+            System.out.println("实例化Statement对...");
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT cityId,cityName from dimcity";
@@ -144,7 +149,7 @@ public class App {
             conn = DriverManager.getConnection(JDBC_URL,USERNAME,PASSWORD);
 
             // 执行查询
-            System.out.println(" 实例化Statement对...");
+            System.out.println("实例化Statement对...");
             stmt = conn.createStatement();
             String sql;
             sql = "SELECT cityId,cityName from dimcity";
@@ -159,11 +164,8 @@ public class App {
             Collections.sort(cts);
             int i=0;
             for(City c : cts){
-                if(i++<10){
-                    System.out.println(c.toString());
-                }else{
-                    break;
-                }
+                if(++i>10) break;
+                System.out.println(c.toString());
             }
             // 完成后关闭
             rs.close();
@@ -188,5 +190,24 @@ public class App {
             }
         }
         System.out.println("Goodbye!");
+    }
+
+    public void test4(){
+        final String MAIL_FROM = PropertiesLoader.getValue("MAIL_FROM");
+        final String MAIL_PASS = PropertiesLoader.getValue("MAIL_PASS");
+        final String MAIL_TO = PropertiesLoader.getValue("MAIL_TO");
+
+        SimpleMailSender sms = SimpleMailSender.getSender(MAIL_FROM,MAIL_PASS);
+        String recipients[] = MAIL_TO.split("[\\s,;':\\|]+");
+
+        try {
+            for (String recipient : recipients) {
+                sms.send(recipient, "test subject","test content");
+            }
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 }
