@@ -1,14 +1,15 @@
 package org.darebeat;
 
-import org.darebeat.utils.PropertiesLoader;
 import org.darebeat.bean.City;
-import org.darebeat.bean.SimpleMailSender;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
+import org.darebeat.bean.MailSender;
+import org.darebeat.utils.PropertiesLoader;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class App {
     static final String JDBC_DRIVER = PropertiesLoader.getValue("JDBC_DRIVER");
@@ -197,17 +198,20 @@ public class App {
         final String MAIL_PASS = PropertiesLoader.getValue("MAIL_PASS");
         final String MAIL_TO = PropertiesLoader.getValue("MAIL_TO");
 
-        SimpleMailSender sms = SimpleMailSender.getSender(MAIL_FROM,MAIL_PASS);
+        MailSender sms = MailSender.getSender(MAIL_FROM,MAIL_PASS);
         String recipients[] = MAIL_TO.split("[\\s,;':\\|]+");
-
+        List<String> rss = new ArrayList<String>();
+        for (String recipient : recipients) {
+            rss.add(recipient);
+        }
         try {
-            for (String recipient : recipients) {
-                sms.send(recipient, "test subject","test content");
-            }
+            sms.send(rss, "main subject for up","Hi content");
         } catch (AddressException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
+
+
 }
