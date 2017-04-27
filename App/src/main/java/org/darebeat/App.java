@@ -1,5 +1,8 @@
 package org.darebeat;
 
+import org.apdplat.word.WordSegmenter;
+import org.apdplat.word.segmentation.Word;
+import org.apdplat.word.tagging.SynonymTagging;
 import org.darebeat.bean.City;
 import org.darebeat.bean.MailSender;
 import org.darebeat.utils.PropertiesLoader;
@@ -12,16 +15,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class App {
-    public static void main( String[] args ) {
-        String filepath = null == args[0] ? "config.properties" : args[0];
-        PropertiesLoader pl = PropertiesLoader.getInstance(filepath);
+    public static void main( String[] args ) throws Exception {
+//        String filepath = null == args[0] ? "config.properties" : args[0];
+//        PropertiesLoader pl = PropertiesLoader.getInstance(filepath);
 
         App p = new App();
         // p.test(pl);
-        p.test1(pl); // just for test database connection
+        // p.test1(pl); // just for test database connection
         // p.test2(pl); // test class wraper
         // p.test3(pl); // get the city length and print the top 10
         // p.test4(pl);
+        p.test5();
     }
 
     public void test(PropertiesLoader p){
@@ -211,5 +215,10 @@ public class App {
         }
     }
 
-
+    public void test5() throws Exception {
+        List<Word> words = WordSegmenter.segWithStopWords("楚离陌千方百计为无情找回记忆");
+        System.out.println(words);
+        SynonymTagging.process(words);
+        System.out.println(words);
+    }
 }

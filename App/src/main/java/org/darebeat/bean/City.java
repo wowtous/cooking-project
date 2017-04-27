@@ -23,7 +23,7 @@ public class City implements Comparable{
 	public int getCityId() {
 		return this.cityId;
 	}
-
+    
 	/**
 	* Returns value of cityName
 	* @return
