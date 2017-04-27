@@ -6,21 +6,23 @@ import java.io.File;
 import java.io.FileInputStream;
 
 public class PropertiesLoader {
+    private static PropertiesLoader propertiesLoader;
 	private static Properties pro;
 
-	static{
+    public static PropertiesLoader getInstance(String filepath){
+        if (null == propertiesLoader) propertiesLoader = new PropertiesLoader();
         try {
             pro = new Properties();
-            FileInputStream fis = new FileInputStream(new File("config.properties"));
+            FileInputStream fis = new FileInputStream(new File(filepath));
             pro.load(fis);
             fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return propertiesLoader;
     }
 
-	public static String getValue(String key){
-        String value = pro.getProperty(key);
-        return value;
+	public String getValue(String key){
+        return pro.getProperty(key);
     }
 }

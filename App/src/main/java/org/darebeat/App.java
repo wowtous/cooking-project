@@ -12,38 +12,36 @@ import java.util.Collections;
 import java.util.List;
 
 public class App {
-    static final String JDBC_DRIVER = PropertiesLoader.getValue("JDBC_DRIVER");
-    static final String JDBC_URL = PropertiesLoader.getValue("JDBC_URL");
-    static final String USERNAME = PropertiesLoader.getValue("USERNAME");
-    static final String PASSWORD = PropertiesLoader.getValue("PASSWORD");
-
     public static void main( String[] args ) {
+        String filepath = null == args[0] ? "config.properties" : args[0];
+        PropertiesLoader pl = PropertiesLoader.getInstance(filepath);
+
         App p = new App();
-        // p.test();
-        // p.test1(); // just for test database connection
-        // p.test2(); // test class wraper
-        // p.test3(); // get the city length and print the top 10
-        p.test4();
+        // p.test(pl);
+        p.test1(pl); // just for test database connection
+        // p.test2(pl); // test class wraper
+        // p.test3(pl); // get the city length and print the top 10
+        // p.test4(pl);
     }
 
-    public void test(){
-        System.out.println(PropertiesLoader.getValue("JDBC_DRIVER"));
-        System.out.println(PropertiesLoader.getValue("JDBC_URL"));
-        System.out.println(PropertiesLoader.getValue("USERNAME"));
-        System.out.println(PropertiesLoader.getValue("PASSWORD"));
+    public void test(PropertiesLoader p){
+        System.out.println(p.getValue("JDBC_DRIVER"));
+        System.out.println(p.getValue("JDBC_URL"));
+        System.out.println(p.getValue("USERNAME"));
+        System.out.println(p.getValue("PASSWORD"));
     }
 
-    public void test1(){
+    public void test1(PropertiesLoader p){
         Connection conn = null;
         Statement stmt = null;
 
         try{
             // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
+            Class.forName(p.getValue("JDBC_DRIVER"));
 
             // 打开链接
             System.out.println("连接数据库...");
-            conn = DriverManager.getConnection(JDBC_URL,USERNAME,PASSWORD);
+            conn = DriverManager.getConnection(p.getValue("JDBC_URL"),p.getValue("USERNAME"),p.getValue("PASSWORD"));
 
             // 执行查询
             System.out.println("实例化Statement对...");
@@ -88,17 +86,17 @@ public class App {
         System.out.println("Goodbye!");
     }
 
-    public void test2(){
+    public void test2(PropertiesLoader p){
         Connection conn = null;
         Statement stmt = null;
 
         try{
             // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
+            Class.forName(p.getValue("JDBC_DRIVER"));
 
             // 打开链接
             System.out.println("连接数据库...");
-            conn = DriverManager.getConnection(JDBC_URL,USERNAME,PASSWORD);
+            conn = DriverManager.getConnection(p.getValue("JDBC_URL"),p.getValue("USERNAME"),p.getValue("PASSWORD"));
 
             // 执行查询
             System.out.println("实例化Statement对...");
@@ -137,17 +135,17 @@ public class App {
         System.out.println("Goodbye!");
     }
 
-    public void test3(){
+    public void test3(PropertiesLoader p){
         Connection conn = null;
         Statement stmt = null;
 
         try{
             // 注册 JDBC 驱动
-            Class.forName(JDBC_DRIVER);
+            Class.forName(p.getValue("JDBC_DRIVER"));
 
             // 打开链接
             System.out.println("连接数据库...");
-            conn = DriverManager.getConnection(JDBC_URL,USERNAME,PASSWORD);
+            conn = DriverManager.getConnection(p.getValue("JDBC_URL"),p.getValue("USERNAME"),p.getValue("PASSWORD"));
 
             // 执行查询
             System.out.println("实例化Statement对...");
@@ -193,10 +191,10 @@ public class App {
         System.out.println("Goodbye!");
     }
 
-    public void test4(){
-        final String MAIL_FROM = PropertiesLoader.getValue("MAIL_FROM");
-        final String MAIL_PASS = PropertiesLoader.getValue("MAIL_PASS");
-        final String MAIL_TO = PropertiesLoader.getValue("MAIL_TO");
+    public void test4(PropertiesLoader p){
+        final String MAIL_FROM = p.getValue("MAIL_FROM");
+        final String MAIL_PASS = p.getValue("MAIL_PASS");
+        final String MAIL_TO = p.getValue("MAIL_TO");
 
         MailSender sms = MailSender.getSender(MAIL_FROM,MAIL_PASS);
         String recipients[] = MAIL_TO.split("[\\s,;':\\|]+");
