@@ -74,6 +74,6 @@ public class City implements Comparable{
 	*/
 	@Override
 	public String toString() {
-		return "City [cityId=" + cityId + ", cityName=" + cityName + ", length=" + length + "]";
+		return "{ cityId=" + cityId + ", cityName=" + cityName +" }";
 	}
 }

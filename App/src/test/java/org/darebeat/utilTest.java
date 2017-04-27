@@ -19,7 +19,7 @@ public class utilTest {
         Phonenumber.PhoneNumber swissMobileNumber =
                 new Phonenumber.PhoneNumber().setCountryCode(41).setNationalNumber(798765432L);
         PhoneNumberToCarrierMapper carrierMapper = PhoneNumberToCarrierMapper.getInstance();
-// Outputs "Swisscom"
+        // Outputs "Swisscom"
         System.out.println(carrierMapper.getNameForNumber(swissMobileNumber, Locale.ENGLISH));
     }
 }
