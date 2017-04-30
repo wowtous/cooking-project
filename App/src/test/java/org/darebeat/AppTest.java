@@ -25,7 +25,7 @@ public class AppTest extends TestCase {
     }
 
     /**
-     * Rigourous Test :-)
+     * Rigourous CityList :-)
      */
     public void testApp() {
         assertTrue( true );

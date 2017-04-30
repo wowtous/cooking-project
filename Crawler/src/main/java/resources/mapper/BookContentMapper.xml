@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.darebeat.mapper.BookContentMapper">
+    <resultMap id="BaseResultMap" type="org.darebeat.model.BookContent">
+        <id column="content_id" property="content_id" jdbcType="BIGINT"/>
+        <result column="content_name" property="content_name" jdbcType="VARCHAR"/>
+        <result column="content_url" property="content_url" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="insert_time" property="insert_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    
+    <sql id="Base_Column_List">
+        content_id,content_name,content_url,status,insert_time
+    </sql>
+    <select id="selectByUrl" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from book_content
+        where content_url=#{content_url,jdbcType=VARCHAR}
+    </select>
+    <insert id="insert" parameterType="org.darebeat.model.BookContent" >
+        insert into book_content (content_id,content_name,content_url,status,insert_time)
+        values (
+            #{content_id,jdbcType=BIGINT},
+            #{content_name,jdbcType=VARCHAR},
+            #{content_url,jdbcType=VARCHAR},
+            #{status,jdbcType=TINYINT},
+            #{insert_time,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="org.darebeat.model.BookContent" >
+        insert into book_content
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="content_id>0" >content_id,</if>
+            <if test="content_name != null" >content_name, </if>
+            <if test="content_url != null" >content_url, </if>
+            <if test="status != null" >status,</if>
+            <if test="insert_time != null" >insert_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="content_id>0" >#{content_id,jdbcType=BIGINT},</if>
+            <if test="content_name != null" >#{content_name,jdbcType=VARCHAR},</if>
+            <if test="content_url != null" >#{content_url,jdbcType=VARCHAR},</if>
+            <if test="status != null" >#{status,jdbcType=TINYINT},</if>
+            <if test="insert_time != null" >#{insert_time,jdbcType=TIMESTAMP},</if>
+        </trim>
+    </insert>
+    <update id="updateStatus" parameterType="org.darebeat.model.BookContent">
+        update book_content SET status = #{status,jdbcType=TINYINT}
+        where content_url = #{content_url,jdbcType=VARCHAR}
+    </update>
+</mapper>
