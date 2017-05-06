@@ -20,10 +20,13 @@ import java.util.List;
  */
 public class WordCount {
     public static void start(String[] args){
-        String mc = args[0].toLowerCase();
-        if (mc == "wordcount" || mc.endsWith(".wordcount")) {
-            new WordCount().run(args);
-        }
+//        String mc = args[0].toLowerCase();
+//        if (mc == "wordcount" || mc.endsWith(".wordcount")) {
+//            System.out.println("wordcount start --------");
+//            new WordCount().run(args);
+//            System.out.println("wordcount ended --------");
+//        }
+        new WordCount().run(args);
     }
 
     public void run(String[] args){
